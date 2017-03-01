@@ -86,9 +86,7 @@ module.exports = (robot) ->
 </VirtualHost>\n"
         
         
-            fs.writeFileSync "/etc/apache2/sites-available/"+repo+".conf", virtualHost, (err) ->
-                return console.log(err) if err
-                console.log "Configuration created." 
+            fs.writeFileSync "/etc/apache2/sites-available/"+repo+".conf", virtualHost
                 
             #Enable the config
             #sudo a2ensite domain.conf
