@@ -61,7 +61,9 @@ module.exports = (robot) ->
             #if they don't exist create the directories
             #TODO fix file path to domain
             exec 'sudo mkdir -p /var/www/html/'+repo, puts
-            exec 'sudo mkdir -p /var/www/html/'+repo+'/{public_html,logs,repo}', puts #TODO this dont work
+            exec 'sudo mkdir -p /var/www/html/'+repo+'/public_html', puts
+            exec 'sudo mkdir -p /var/www/html/'+repo+'/logs', puts
+            exec 'sudo mkdir -p /var/www/html/'+repo+'/repo', puts
         
         #check if configuration already exists 
         # at /etc/apache2/sites-available/domain.conf
@@ -84,7 +86,7 @@ module.exports = (robot) ->
 </VirtualHost>\n"
         
         
-            fs.writeFile "/etc/apache2/sites-available/"+repo+".conf", virtualHost, (err) ->
+            fs.writeFileSync "/etc/apache2/sites-available/"+repo+".conf", virtualHost, (err) ->
                 return console.log(err) if err
                 console.log "Configuration created." 
                 
