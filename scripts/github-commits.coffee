@@ -61,7 +61,7 @@ module.exports = (robot) ->
             #if they don't exist create the directories
             #TODO fix file path to domain
             exec 'sudo mkdir -p /var/www/html/'+repo, puts
-            exec 'sudo mkdir -p /var/www/html/'+repo+'/{public_html,logs,repo}', puts
+            exec 'sudo mkdir -p /var/www/html/'+repo+'/{public_html,logs,repo}', puts #TODO this dont work
         
         #check if configuration already exists 
         # at /etc/apache2/sites-available/domain.conf
@@ -83,29 +83,33 @@ module.exports = (robot) ->
         CustomLog /var/www/html/"+repo+"/logs/access.log combined\n
 </VirtualHost>\n"
         
+        
+            fs.writeFile "/etc/apache2/sites-available/"+repo+".conf", virtualHost, (err) ->
+                return console.log(err) if err
+                console.log "Configuration created." 
+                
             #Enable the config
             #sudo a2ensite domain.conf
             exec 'sudo a2ensite '+repo+'.conf', puts
+            console.log "Configuration enabled on Apache." 
 
             #restart apache
             #sudo systemctl reload apache2
             exec 'sudo systemctl reload apache2', puts
+            console.log "Apache reloaded." 
 
             #setup ssl
             #sudo letsencrypt --apache -d domain --agree-tos --non-interactive --email jonathonshields@gmail.com --redirect
             exec 'sudo letsencrypt --apache -d '+repo+' --agree-tos --non-interactive --email jonathonshields@gmail.com --redirect', puts
-            
-            #TODO fix file path to domain
-            fs.writeFile "/etc/apache2/sites-available/"+repo+".conf", virtualHost, (err) ->
-                return console.log(err) if err
-                console.log "The file was saved!" 
+            console.log "Activating SSL." 
         
         #Get latest git
         exec 'cd /var/www/html/'+repo+'/repo', puts
         if !fs.existsSync('/var/www/html/'+repo+'/repo/'+repo)
-            exec 'git clone #{push.repository.clone_url}', puts
+            exec 'git clone '+push.repository.clone_url, puts
         exec 'cd /var/www/html/'+repo+'/repo/'+repo, puts
         exec 'git pull', puts
+        console.log "Updating repository." 
         
         #jekyll build & deploy
         
