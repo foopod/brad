@@ -57,7 +57,7 @@ module.exports = (robot) ->
         
         #check if main directory already exists
         # at /var/www/html/domain
-        if !fs.existsSync('/var/www/html/'+repo)
+        if !fs.existsSync '/var/www/html/'+repo
             #if they don't exist create the directories
             #TODO fix file path to domain
             exec 'sudo mkdir -p /var/www/html/'+repo, puts
@@ -67,7 +67,7 @@ module.exports = (robot) ->
         
         #check if configuration already exists 
         # at /etc/apache2/sites-available/domain.conf
-        if !fs.existsSync('/etc/apache2/sites-available/'+repo+'.conf') 
+        if !fs.existsSync '/etc/apache2/sites-available/'+repo+'.conf'
             # if it doesn't exist create configuration for virtual host
             virtualHost = "<Directory /var/www/html/"+repo+"/public_html>\n
         Require all granted\n
@@ -88,7 +88,7 @@ module.exports = (robot) ->
         
             fs.writeFileSync "/etc/apache2/sites-available/"+repo+".conf", virtualHost
             console.log "Config created." 
-            
+
             #Enable the config
             #sudo a2ensite domain.conf
             exec 'sudo a2ensite '+repo+'.conf', puts
@@ -104,12 +104,12 @@ module.exports = (robot) ->
 #            console.log "Activating SSL." 
         
         #Get latest git
-        if !fs.existsSync('/var/www/html/'+repo+'/repo/'+repo)
+        if !fs.existsSync '/var/www/html/'+repo+'/repo/'+repo
             console.log 'sudo git clone '+push.repository.clone_url + ' /var/www/html/'+repo+'/repo/'+repo
             exec 'sudo git clone '+push.repository.clone_url + ' /var/www/html/'+repo+'/repo/'+repo, puts
-            
+
         console.log 'sudo git -C /var/www/html/'+repo+'/repo/'+repo +' pull'
-        exec 'sudo git -C /var/www/html/'+repo+'/repo/'+repo +' pull', puts
+        exec 'sudo git -C /var/www/html/'+repo+'/repo/'+repo+' pull', puts
         console.log "Updating repository." 
         
         #jekyll build & deploy
