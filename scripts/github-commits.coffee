@@ -24,7 +24,7 @@ url = require('url')
 querystring = require('querystring')
 gitio = require('gitio2')
 sys = require('sys')
-exec = require('child_process').exec
+exec = require('child_process').execSync
 
 puts = (error, stdout, stderr) ->
   sys.puts stdout
