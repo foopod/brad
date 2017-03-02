@@ -105,10 +105,14 @@ module.exports = (robot) ->
         
         #Get latest git
         exec 'sudo cd /var/www/html/'+repo+'/repo', puts
+        console.log 'sudo cd /var/www/html/'+repo+'/repo'
         if !fs.existsSync('/var/www/html/'+repo+'/repo/'+repo)
             exec 'sudo git clone '+push.repository.clone_url, puts
+            console.log 'sudo git clone '+push.repository.clone_url
         exec 'sudo cd /var/www/html/'+repo+'/repo/'+repo, puts
+        console.log 'sudo cd /var/www/html/'+repo+'/repo/'+repo
         exec 'sudo git pull', puts
+        console.log 'sudo git pull'
         console.log "Updating repository." 
         
         #jekyll build & deploy
