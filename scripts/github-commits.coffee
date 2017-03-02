@@ -115,5 +115,5 @@ module.exports = (robot) ->
         #jekyll build & deploy
         
     catch error
-      console.log "github-commits error: #{error}. Push: #{JSON.stringify push}"
+      console.log "github-commits error: #{error.stack}. Push: #{JSON.stringify push}"
 
