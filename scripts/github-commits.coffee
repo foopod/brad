@@ -108,8 +108,8 @@ module.exports = (robot) ->
             console.log 'sudo git clone '+push.repository.clone_url + ' /var/www/html/'+repo+'/repo/'+repo
             exec 'sudo git clone '+push.repository.clone_url + ' /var/www/html/'+repo+'/repo/'+repo, puts
 
-        console.log 'sudo git -C /var/www/html/'+repo+'/repo/'+repo +' pull'
-        exec 'sudo git -C /var/www/html/'+repo+'/repo/'+repo+' pull', puts
+        console.log "sudo git -C /var/www/html/#{repo}/repo/#{repo} pull"
+        exec "sudo git -C /var/www/html/#{repo}/repo/#{repo} pull", puts
         console.log "Updating repository." 
         
         #jekyll build & deploy
