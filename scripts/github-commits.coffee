@@ -87,7 +87,8 @@ module.exports = (robot) ->
         
         
             fs.writeFileSync "/etc/apache2/sites-available/"+repo+".conf", virtualHost
-                
+            console.log "Config created." 
+            
             #Enable the config
             #sudo a2ensite domain.conf
             exec 'sudo a2ensite '+repo+'.conf', puts
@@ -99,16 +100,15 @@ module.exports = (robot) ->
             console.log "Apache reloaded." 
 
             #setup ssl
-            #sudo letsencrypt --apache -d domain --agree-tos --non-interactive --email jonathonshields@gmail.com --redirect
-            exec 'sudo letsencrypt --apache -d '+repo+' --agree-tos --non-interactive --email jonathonshields@gmail.com --redirect', puts
-            console.log "Activating SSL." 
+#            exec 'sudo letsencrypt --apache -d '+repo+' --agree-tos --non-interactive --email jonathonshields@gmail.com --redirect', puts
+#            console.log "Activating SSL." 
         
         #Get latest git
-        exec 'cd /var/www/html/'+repo+'/repo', puts
+        exec 'sudo cd /var/www/html/'+repo+'/repo', puts
         if !fs.existsSync('/var/www/html/'+repo+'/repo/'+repo)
-            exec 'git clone '+push.repository.clone_url, puts
-        exec 'cd /var/www/html/'+repo+'/repo/'+repo, puts
-        exec 'git pull', puts
+            exec 'sudo git clone '+push.repository.clone_url, puts
+        exec 'sudo cd /var/www/html/'+repo+'/repo/'+repo, puts
+        exec 'sudo git pull', puts
         console.log "Updating repository." 
         
         #jekyll build & deploy
