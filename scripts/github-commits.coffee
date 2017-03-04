@@ -116,10 +116,10 @@ setup = (repo) ->
         exec 'sudo git clone '+push.repository.clone_url + ' /var/www/html/'+repo+'/repo/'+repo, puts
         
     cp.chdir "/var/www/html/#{repo}/repo/#{repo}/"
-    exec "sudo git pull", puts
+    exec "sudo git pull", {cwd:"/var/www/html/#{repo}/repo/#{repo}/"}, puts
     console.log "Updating repository." 
 
     config = require "/var/www/html/#{repo}/repo/#{repo}/deploy-config.json";
     if config.build_cmd and config.public_html
-        exec config.build_cmd, puts
-        exec "sudo cp "+config.public_html+ "/* /var/www/html/#{repo}/public_html/", puts
+        exec config.build_cmd, {cwd:"/var/www/html/#{repo}/repo/#{repo}/"}, puts
+        exec "sudo cp "+config.public_html+ "/* /var/www/html/#{repo}/public_html/", {cwd:"/var/www/html/#{repo}/repo/#{repo}/"}, puts
