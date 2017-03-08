@@ -119,6 +119,7 @@ setup = (repo) ->
     console.log "Updating repository." 
 
     config = require "/var/www/html/#{repo}/repo/#{repo}/deploy-config.json";
+    exec 'sudo "PATH=$PATH'
     console.log config.build_cmd
     console.log config.public_html
     if config.build_cmd and config.public_html
